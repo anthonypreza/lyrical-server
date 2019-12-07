@@ -4,7 +4,7 @@ import requests
 from bs4 import BeautifulSoup
 
 GENIUS_BASE_URL = 'https://api.genius.com'
-GENIUS_ACCESS_TOKEN = os.environ['GENIUS_ACCESS_TOKEN']
+GENIUS_ACCESS_TOKEN = os.getenv('GENIUS_ACCESS_TOKEN')
 AUTH_HEADERS = {'Authorization': 'Bearer ' + GENIUS_ACCESS_TOKEN}
 
 

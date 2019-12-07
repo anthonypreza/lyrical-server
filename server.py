@@ -1,11 +1,13 @@
 import argparse
+import json
 import logging
 import sys
-import json
 
-from genius import get_song_info, get_lyrics, get_lyrics_free_tier
 from flask import Flask, Response, jsonify, request
 from flask_cors import CORS
+
+from genius import get_lyrics, get_lyrics_free_tier, get_song_info
+from nlp import filtered_tokenize, get_most_common
 
 logging.basicConfig(level=logging.DEBUG,
                     format='%(asctime)s - %(levelname)s - %(name)s - %(message)s')
@@ -50,6 +52,20 @@ def lyrics():
     else:
         return "Did you mean to make a POST request to this endpoint?"
 
+@APP.route(API_ROOT + 'wordcloud', methods=["GET", "POST"])
+def wordcloud():
+    if request.method == 'POST' and request.data:
+        data = json.loads(request.data)
+        top_tracks = data['top_tracks']
+        t = top_tracks[0]
+        hits = [get_song_info(t['name'], t['artists'])]
+        lyrics = [get_lyrics(hits[0])]
+        tokenized_lyrics = [filtered_tokenize(lyrics[0])]
+        word_list = [word for array in tokenized_lyrics for word in array]
+        most_common = get_most_common(word_list)
+    else:
+        return "Did you mean to make a POST request to this endpoint?"
+    return jsonify(most_common)
 
 @APP.errorhandler(401)
 def page_not_found():
