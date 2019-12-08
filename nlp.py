@@ -27,9 +27,10 @@ def get_most_common(word_list):
 
 
 def tokenized_lyrics(lyrics):
-    lyrics = lyrics.replace('/n', ' ')
-    lyrics = lyrics.replace('Verse', '')
-    lyrics = lyrics.replace('Chorus', '')
-    lyrics = lyrics.replace('Outro', '')
-    lyrics = lyrics.replace('Intro', '')
-    return filtered_tokenize(lyrics)
+    try:
+        lyrics = lyrics.replace('/n', ' ').replace('Verse', '').replace(
+            'Chorus', '').replace('Outro', '').replace('Intro', '')
+        return filtered_tokenize(lyrics)
+    except AttributeError as e:
+        print(e)
+        return ''

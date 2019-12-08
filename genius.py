@@ -27,17 +27,25 @@ def get_song_info(name, artists):
 
 
 def get_lyrics(hit):
-    song_url = hit['result']['url']
-    page = requests.get(song_url)
-    html = BeautifulSoup(page.text, 'html.parser')
-    lyrics = html.find('div', class_='lyrics').get_text()
-    return lyrics
+    try:
+        song_url = hit['result']['url']
+        page = requests.get(song_url)
+        html = BeautifulSoup(page.text, 'html.parser')
+        lyrics = html.find('div', class_='lyrics').get_text()
+        return lyrics
+    except TypeError as e:
+        print(e)
+        return
 
 
 def get_lyrics_free_tier(hit):
-    song_api_path = hit['result']['api_path']
-    song_url = GENIUS_BASE_URL + song_api_path
-    response = requests.get(song_url, headers=AUTH_HEADERS)
-    r = response.json()
-    embed_content = r['response']['song']['embed_content']
-    return embed_content
+    try:
+        song_api_path = hit['result']['api_path']
+        song_url = GENIUS_BASE_URL + song_api_path
+        response = requests.get(song_url, headers=AUTH_HEADERS)
+        r = response.json()
+        embed_content = r['response']['song']['embed_content']
+        return embed_content
+    except TypeError as e:
+        print(e)
+        return
