@@ -181,8 +181,6 @@ def main() -> None:
     args: argparse.Namespace = parse_args(sys.argv[1:])
     logger.info('Starting server on port %s with debug=%s', args.port,
                 args.debug)
-    secret_key: bytes = b'R0Rl1C0ByYZM9IX3t2EQ1FgigOAx9Wo4'
-    APP.secret_key = secret_key
     APP.run(host='0.0.0.0', port=args.port, debug=args.debug)
 
 
