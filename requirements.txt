@@ -3,3 +3,4 @@ flask-cors
 nltk
 requests
 bs4
+python-dotenv

@@ -1,0 +1,6 @@
+#!/bin/bash
+
+source .venv/bin/activate
+export FLASK_APP=lyrical_server
+export FLASK_DEBUG=true
+flask run --port 8000
