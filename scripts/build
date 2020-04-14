@@ -2,8 +2,9 @@
 
 rm -rf .venv
 
-# python3 should point to 3.7, use pyenv shell 3.7.4 before running
-python3 -m venv .venv
+# python should point to 3.7, use pyenv shell 3.7.4 before running
+python --version
+python -m venv .venv
 source .venv/bin/activate
 pip install --upgrade pip
 pip install -rrequirements.txt && pip install -rtests/requirements.txt
